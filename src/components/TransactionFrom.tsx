@@ -88,7 +88,7 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
           <Controller
             name="date"
             control={control}
-            render={(field) => (
+            render={({ field }) => (
               <TextField
                 {...field}
                 label="日付"
@@ -105,7 +105,7 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
           <Controller
             name="category"
             control={control}
-            render={(field) => (
+            render={({ field }) => (
               <TextField {...field} id="カテゴリ" label="カテゴリ" select >
                 <MenuItem value={"食費"}>
                   <ListItemIcon>
@@ -121,8 +121,8 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
           <Controller
             name="amount"
             control={control}
-            render={(filed) => (
-              < TextField {...filed} label="金額" type="number" />
+            render={({ field }) => (
+              < TextField {...field} label="金額" type="number" />
 
             )}
 
@@ -133,8 +133,8 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
           <Controller
             name="content"
             control={control}
-            render={(filed) => (
-              <TextField {...filed} label="内容" type="text" />
+            render={({ field }) => (
+              <TextField {...field} label="内容" type="text" />
 
             )}
 
