@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  colors,
   IconButton,
   ListItemIcon,
   MenuItem,
@@ -20,10 +21,11 @@ interface TransactionFormProps {
   currentDay: string
 }
 
+type IncomeExpense = "income" | "expense"
 
 const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: TransactionFormProps) => {
   const formWidth = 320;
-  const { control } = useForm({
+  const { control, setValue } = useForm({
     defaultValues: {
       type: "expense",
       date: currentDay,
@@ -32,6 +34,13 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
       content: ""
     }
   })
+
+  const incoomeExpenseToggle = (type: IncomeExpense): void => {
+    setValue("type", type)
+
+  }
+
+
   return (
     <Box
       sx={{
@@ -73,15 +82,26 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
           <Controller
             name="type"
             control={control}
-            render={() => (<ButtonGroup fullWidth>
-              <Button variant={"contained"} color="error">
-                支出
-              </Button>
-              <Button>収入</Button>
-            </ButtonGroup>
+
+            render={({ field }) => {
+              console.log("field", field)
+
+              return (<ButtonGroup fullWidth>
+                <Button onClick={() => incoomeExpenseToggle("expense")}
+                  variant={field.value === "expense" ? "contained" : "outlined"} color="error">
+                  支出
+                </Button>
+                <Button
+                  variant={field.value === "income" ? "contained" : "outlined"}
+                  onClick={() => incoomeExpenseToggle("income")}
+                  color="primary"
+                >収入</Button>
+
+              </ButtonGroup>
 
 
-            )}
+              )
+            }}
           />
 
           {/* 日付 */}

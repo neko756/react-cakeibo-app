@@ -11,6 +11,8 @@ interface HomeProps {
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
 }
 
+
+
 const Home = ({ monthlyTransactions, setCurrentMonth }: HomeProps) => {
   const today = format(new Date(), "yyyy-MM-dd");
   const [currentDay, setCurrentDay] = useState(today);
@@ -28,7 +30,8 @@ const Home = ({ monthlyTransactions, setCurrentMonth }: HomeProps) => {
 
   }
 
-  console.log("dayliyTransactions", dayliyTransactions)
+  const incoomeExpenseToggle = ("expence")
+
   return (
     <Box sx={{ display: "flex" }}>
       {/* 上コンテンツ */}
