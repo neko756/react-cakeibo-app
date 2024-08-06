@@ -2,7 +2,7 @@
  * データベース定義
  */
 export type TransactionType = "income" | "expense";
-export type IncomeCategory = "給与" | "副収入" | "交通費";
+export type IncomeCategory = "給与" | "副収入" | "お小遣い";
 export type ExpenseCategory =
   | "食費"
   | "日用品"

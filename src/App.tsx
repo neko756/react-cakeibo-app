@@ -16,26 +16,26 @@ import { formatmonth } from './utils/formatting';
 
 function App() {
   // fireStoreエラーの
-  function isFireStoreError(err:unknown):err is {code:string,message:string}{
- 
-    return typeof err === "object" && err !==null && "code" in err
+  function isFireStoreError(err: unknown): err is { code: string, message: string } {
+
+    return typeof err === "object" && err !== null && "code" in err
 
   }
-  const [transactions,setTranctions] = useState<Transaction[]>([])
-  const [currentMonth,setCurrentMonth] = useState(new Date())
+  const [transactions, setTranctions] = useState<Transaction[]>([])
+  const [currentMonth, setCurrentMonth] = useState(new Date())
 
-  console.log(format(currentMonth,"yyyy-MM"));
-  useEffect( () => {
+
+  useEffect(() => {
     // awaitぶんを直接入れられないのでfetchを書く
     const fetchTransactions = async () => {
       try {
         // データセット取得
         const querySnapshot = await getDocs(collection(db, "Transactions"));
 
-        const transactionData =  querySnapshot.docs.map((doc) => {
+        const transactionData = querySnapshot.docs.map((doc) => {
           // doc.data() is never undefined for query doc snapshots
           // ,data()で実際のidが取得できる.
-          console.log(doc.id, " => ", doc.data());
+
           return {
             ...doc.data(),
             id: doc.id,
@@ -43,26 +43,25 @@ function App() {
         });
         setTranctions(transactionData)
       } catch (error) {
-        if(isFireStoreError(error)) {
+        if (isFireStoreError(error)) {
           console.error(error)
           console.error(error.message)
           console.error(error.code)
-        }else {
+        } else {
           console.error(error)
 
         }
-        
+
       }
 
     }
     fetchTransactions()
-  },[])
-   
-  const monthlyTransactions = transactions.filter((transaction)=> {
-   return transaction.date.startsWith(formatmonth(currentMonth))
+  }, [])
+
+  const monthlyTransactions = transactions.filter((transaction) => {
+    return transaction.date.startsWith(formatmonth(currentMonth))
   })
-  
-  console.log("Transaction",monthlyTransactions)
+
 
   return (
     <ThemeProvider theme={thema}>
@@ -70,7 +69,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<AppLayout />}>
-            <Route index element={<Home monthlyTransactions={monthlyTransactions} setCurrentMonth={setCurrentMonth}/>}></Route>
+            <Route index element={<Home monthlyTransactions={monthlyTransactions} setCurrentMonth={setCurrentMonth} />}></Route>
             <Route path="/report" element={<Report />}></Route>
             <Route path="*" element={<NoMatch />}></Route>
           </Route>
